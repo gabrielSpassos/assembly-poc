@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: assembly-service
+    port: 8080
+  data:
+    mongodb:
+      uri: mongodb://root:assemblyPass@localhost:27017/assembly
+
+  springdoc:
+    swagger-ui:
+      path: /swagger-ui.html
