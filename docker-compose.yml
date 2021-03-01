@@ -4,7 +4,9 @@ services:
 
   mongo:
     image: mongo
+    container_name: 'assembly-mongodb'
     environment:
+      MONGO_INITDB_DATABASE: assembly
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: assemblyPass
     ports:
@@ -12,6 +14,7 @@ services:
 
   mongo-express:
     image: mongo-express
+    container_name: 'assembly-mongo-express'
     ports:
       - 8081:8081
     environment:
