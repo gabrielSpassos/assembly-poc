@@ -4,7 +4,7 @@ spring:
     port: 8080
   data:
     mongodb:
-      uri: mongodb://root:assemblyPass@localhost:27017/assembly
+      uri: mongodb://localhost:27017/assemblydb
 
   springdoc:
     swagger-ui:
