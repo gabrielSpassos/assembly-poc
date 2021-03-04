@@ -13,3 +13,7 @@ springdoc:
 kafka:
   bootstrap-servers: localhost:9092
   votes-topic: votes-request-topic
+
+client:
+  customer-info:
+    url: https://user-info.herokuapp.com
