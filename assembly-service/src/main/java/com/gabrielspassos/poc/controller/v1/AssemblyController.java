@@ -7,6 +7,7 @@ import com.gabrielspassos.poc.service.AssemblyService;
 import com.gabrielspassos.poc.service.VoteService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +29,12 @@ public class AssemblyController implements BaseVersion {
         log.info("Iniciado a criação de assembleia");
 
         return assemblyService.createAssembly();
+    }
+
+    @GetMapping("/assemblies/{assemblyId}")
+    public Mono<AssemblyEntity> getAssemblyById(@PathVariable("assemblyId") String assemblyId) {
+        return assemblyService.getAssemblyById(assemblyId)
+                .doOnSuccess(response -> log.info("Encontrado assembleia {}", response));
     }
 
     @PostMapping("/assemblies/{assemblyId}/votes")

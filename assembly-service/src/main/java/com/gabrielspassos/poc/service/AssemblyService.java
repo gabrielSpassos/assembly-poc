@@ -2,6 +2,7 @@ package com.gabrielspassos.poc.service;
 
 import com.gabrielspassos.poc.builder.entity.AssemblyEntityBuilder;
 import com.gabrielspassos.poc.entity.AssemblyEntity;
+import com.gabrielspassos.poc.exception.NotFoundAssemblyException;
 import com.gabrielspassos.poc.repository.AssemblyRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,11 @@ public class AssemblyService {
     public Mono<AssemblyEntity> createAssembly() {
         AssemblyEntity assemblyEntity = AssemblyEntityBuilder.build();
         return assemblyRepository.save(assemblyEntity);
+    }
+
+    public Mono<AssemblyEntity> getAssemblyById(String assemblyId) {
+        return assemblyRepository.findById(assemblyId)
+                .switchIfEmpty(Mono.error(new NotFoundAssemblyException()));
     }
 
 

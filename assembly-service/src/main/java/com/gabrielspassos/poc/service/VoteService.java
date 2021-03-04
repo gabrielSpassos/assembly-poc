@@ -14,11 +14,14 @@ import reactor.core.publisher.Mono;
 @AllArgsConstructor
 public class VoteService {
 
+    private final AssemblyService assemblyService;
     private final VoteProducer voteProducer;
 
     public Mono<VoteEntity> submitVote(String assemblyId, VoteRequest voteRequest) {
         VoteEntity voteEntity = VoteEntityBuilder.build(voteRequest);
-        return voteProducer.sendVoteToTopic(voteEntity);
+
+        return assemblyService.getAssemblyById(assemblyId)
+                .flatMap(assemblyEntity -> voteProducer.sendVoteToTopic(assemblyEntity.getId(), voteEntity));
     }
 
 }

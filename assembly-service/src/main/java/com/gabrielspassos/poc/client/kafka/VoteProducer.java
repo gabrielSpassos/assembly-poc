@@ -16,8 +16,8 @@ public class VoteProducer extends KafkaReactiveProducer {
 
     private final KafkaConfig kafkaConfig;
 
-    public Mono<VoteEntity> sendVoteToTopic(VoteEntity voteEntity) {
-        VoteRequest voteRequest = VoteRequestBuilder.build(voteEntity);
+    public Mono<VoteEntity> sendVoteToTopic(String assemblyId, VoteEntity voteEntity) {
+        VoteRequest voteRequest = VoteRequestBuilder.build(assemblyId, voteEntity);
         String message = JsonUtil.getStringJson(voteRequest);
         return sendMessages(kafkaConfig.getBootstrapServers(), kafkaConfig.getVotesTopic(), message)
                 .thenReturn(voteEntity);

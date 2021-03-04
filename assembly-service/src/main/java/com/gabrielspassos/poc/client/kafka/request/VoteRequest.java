@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class VoteRequest {
 
+    private String assemblyId;
     private VoteChoiceEnum voteChoice;
     private CustomerRequest customer;
 

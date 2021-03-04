@@ -8,10 +8,10 @@ import com.gabrielspassos.poc.entity.VoteEntity;
 
 public class VoteRequestBuilder {
 
-    public static VoteRequest build(VoteEntity voteEntity) {
+    public static VoteRequest build(String assemblyId, VoteEntity voteEntity) {
         CustomerRequest customer = buildCustomer(voteEntity.getCustomer());
 
-        return new VoteRequest(voteEntity.getVoteChoice(), customer);
+        return new VoteRequest(assemblyId, voteEntity.getVoteChoice(), customer);
     }
 
     private static CustomerRequest buildCustomer(CustomerEntity customerEntity) {
