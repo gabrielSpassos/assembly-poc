@@ -4,7 +4,7 @@ services:
   mongo:
     image: mongo
     networks: 
-      - broker-kafka
+      - assembly-net
     container_name: 'assembly-mongodb'
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
@@ -16,7 +16,7 @@ services:
     image: confluentinc/cp-zookeeper:latest
     container_name: 'assembly-zookeeper'
     networks: 
-      - broker-kafka
+      - assembly-net
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -25,7 +25,7 @@ services:
     image: confluentinc/cp-kafka:latest
     container_name: 'assembly-kafka'
     networks: 
-      - broker-kafka
+      - assembly-net
     depends_on:
       - zookeeper
     ports:
@@ -40,8 +40,9 @@ services:
 
   kafdrop:
     image: obsidiandynamics/kafdrop:latest
+    container_name: 'assembly-kafdrop'
     networks: 
-      - broker-kafka
+      - assembly-net
     depends_on:
       - kafka
     ports:
@@ -50,5 +51,5 @@ services:
       KAFKA_BROKERCONNECT: kafka:29092
 
 networks: 
-  broker-kafka:
+  assembly-net:
     driver: bridge  
