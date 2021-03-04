@@ -10,6 +10,9 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
 
+assembly:
+  default-expiration-minutes: 1
+
 kafka:
   bootstrap-servers: localhost:9092
   votes-topic: votes-request-topic
