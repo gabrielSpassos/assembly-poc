@@ -18,6 +18,7 @@ public class VoteEntityBuilder {
 
     private static CustomerEntity buildCustomer(CustomerRequest customerRequest) {
         return CustomerEntity.builder()
+                .id(customerRequest.getId())
                 .cpf(customerRequest.getCpf())
                 .build();
     }

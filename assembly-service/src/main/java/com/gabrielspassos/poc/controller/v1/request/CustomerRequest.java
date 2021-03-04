@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class CustomerRequest {
 
+    private String id;
     private String cpf;
 
 }

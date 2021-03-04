@@ -15,6 +15,6 @@ public class VoteRequestBuilder {
     }
 
     private static CustomerRequest buildCustomer(CustomerEntity customerEntity) {
-        return new CustomerRequest(customerEntity.getCpf());
+        return new CustomerRequest(customerEntity.getId(), customerEntity.getCpf());
     }
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 @Builder
 public class CustomerEntity {
 
+    private String id;
     private String cpf;
 
 }
