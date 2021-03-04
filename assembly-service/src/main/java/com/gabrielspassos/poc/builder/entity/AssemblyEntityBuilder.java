@@ -1,4 +1,4 @@
-package com.gabrielspassos.poc.builder;
+package com.gabrielspassos.poc.builder.entity;
 
 import com.gabrielspassos.poc.entity.AssemblyEntity;
 import com.gabrielspassos.poc.enumerator.AssemblyStatusEnum;

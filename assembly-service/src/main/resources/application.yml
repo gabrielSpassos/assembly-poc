@@ -6,6 +6,10 @@ spring:
     mongodb:
       uri: mongodb://root:password@localhost:27017/admin
 
-  springdoc:
-    swagger-ui:
-      path: /swagger-ui.html
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+kafka:
+  bootstrap-servers: localhost:9092
+  votes-topic: votes-request-topic

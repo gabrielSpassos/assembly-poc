@@ -1,6 +1,6 @@
 package com.gabrielspassos.poc.service;
 
-import com.gabrielspassos.poc.builder.AssemblyEntityBuilder;
+import com.gabrielspassos.poc.builder.entity.AssemblyEntityBuilder;
 import com.gabrielspassos.poc.entity.AssemblyEntity;
 import com.gabrielspassos.poc.repository.AssemblyRepository;
 import lombok.AllArgsConstructor;
@@ -19,4 +19,6 @@ public class AssemblyService {
         AssemblyEntity assemblyEntity = AssemblyEntityBuilder.build();
         return assemblyRepository.save(assemblyEntity);
     }
+
+
 }
