@@ -24,14 +24,14 @@ public class AssemblyService {
 
     public Mono<AssemblyEntity> createAssembly() {
         AssemblyEntity assemblyEntity = AssemblyEntityBuilder.build();
-        return assemblyRepository.save(assemblyEntity);
+        return saveAssembly(assemblyEntity);
     }
 
     public Mono<AssemblyEntity> updateAssembly(String assemblyId, UpdateAssemblyRequest updateAssemblyRequest) {
         return getAssemblyById(assemblyId)
                 .map(assemblyEntity -> AssemblyEntityMapper.map(
                         assemblyEntity, updateAssemblyRequest, assemblyConfig.getAssemblyDefaultExpirationMinutes()))
-                .flatMap(assemblyRepository::save);
+                .flatMap(this::saveAssembly);
     }
 
     public Mono<AssemblyEntity> getAssemblyById(String assemblyId) {
@@ -41,6 +41,10 @@ public class AssemblyService {
 
     public Flux<AssemblyEntity> getAssemblies(Pageable page) {
         return assemblyRepository.findAllBy(page);
+    }
+
+    Mono<AssemblyEntity> saveAssembly(AssemblyEntity assemblyEntity) {
+        return assemblyRepository.save(assemblyEntity);
     }
 
 }
