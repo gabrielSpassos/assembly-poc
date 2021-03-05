@@ -1,43 +1,26 @@
 package com.gabrielspassos.poc.builder.entity;
 
-import com.gabrielspassos.poc.client.kafka.event.CustomerEvent;
-import com.gabrielspassos.poc.client.kafka.event.VoteEvent;
-import com.gabrielspassos.poc.controller.v1.request.CustomerRequest;
-import com.gabrielspassos.poc.controller.v1.request.VoteRequest;
+import com.gabrielspassos.poc.dto.CustomerDTO;
+import com.gabrielspassos.poc.dto.VoteDTO;
 import com.gabrielspassos.poc.entity.CustomerEntity;
 import com.gabrielspassos.poc.entity.VoteEntity;
 
 public class VoteEntityBuilder {
 
-    public static VoteEntity build(VoteRequest voteRequest) {
-        CustomerEntity customer = buildCustomer(voteRequest.getCustomer());
+    public static VoteEntity build(VoteDTO voteDTO) {
+        CustomerDTO customerDTO = voteDTO.getCustomer();
+        CustomerEntity customer = buildCustomer(customerDTO.getId(), customerDTO.getCpf());
 
         return VoteEntity.builder()
-                .voteChoice(voteRequest.getChoice())
+                .voteChoice(voteDTO.getVoteChoice())
                 .customer(customer)
                 .build();
     }
 
-    public static VoteEntity build(VoteEvent voteEvent) {
-        CustomerEntity customer = buildCustomer(voteEvent.getCustomer());
-
-        return VoteEntity.builder()
-                .voteChoice(voteEvent.getVoteChoice())
-                .customer(customer)
-                .build();
-    }
-
-    private static CustomerEntity buildCustomer(CustomerRequest customer) {
+    private static CustomerEntity buildCustomer(String id, String cpf) {
         return CustomerEntity.builder()
-                .id(customer.getId())
-                .cpf(customer.getCpf())
-                .build();
-    }
-
-    private static CustomerEntity buildCustomer(CustomerEvent customer) {
-        return CustomerEntity.builder()
-                .id(customer.getId())
-                .cpf(customer.getCpf())
+                .id(id)
+                .cpf(cpf)
                 .build();
     }
 

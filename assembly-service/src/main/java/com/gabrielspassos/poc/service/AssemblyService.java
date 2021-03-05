@@ -1,10 +1,14 @@
 package com.gabrielspassos.poc.service;
 
+import com.gabrielspassos.poc.builder.dto.AssemblyDTOBuilder;
 import com.gabrielspassos.poc.builder.dto.AssemblyResultDTOBuilder;
 import com.gabrielspassos.poc.builder.entity.AssemblyEntityBuilder;
 import com.gabrielspassos.poc.config.AssemblyConfig;
 import com.gabrielspassos.poc.controller.v1.request.UpdateAssemblyRequest;
+import com.gabrielspassos.poc.dto.AssemblyDTO;
 import com.gabrielspassos.poc.dto.AssemblyResultDTO;
+import com.gabrielspassos.poc.dto.CreateAssemblyDTO;
+import com.gabrielspassos.poc.dto.VoteDTO;
 import com.gabrielspassos.poc.entity.AssemblyEntity;
 import com.gabrielspassos.poc.entity.VoteEntity;
 import com.gabrielspassos.poc.enumerator.AssemblyResultEnum;
@@ -30,21 +34,23 @@ public class AssemblyService {
     private final AssemblyConfig assemblyConfig;
     private final AssemblyRepository assemblyRepository;
 
-    public Mono<AssemblyEntity> createAssembly() {
-        AssemblyEntity assemblyEntity = AssemblyEntityBuilder.build();
+    public Mono<AssemblyDTO> createAssembly(CreateAssemblyDTO createAssemblyDTO) {
+        AssemblyEntity assemblyEntity = AssemblyEntityBuilder.build(createAssemblyDTO);
         return saveAssembly(assemblyEntity);
     }
 
-    public Mono<AssemblyEntity> updateAssembly(String assemblyId, UpdateAssemblyRequest updateAssemblyRequest) {
+    public Mono<AssemblyDTO> updateAssembly(String assemblyId, UpdateAssemblyRequest updateAssemblyRequest) {
         return getAssemblyById(assemblyId)
+                .map(AssemblyEntityBuilder::build)
                 .map(assemblyEntity -> AssemblyEntityMapper.map(
                         assemblyEntity, updateAssemblyRequest, assemblyConfig.getAssemblyDefaultExpirationMinutes()))
                 .flatMap(this::saveAssembly);
     }
 
-    public Mono<AssemblyEntity> getAssemblyById(String assemblyId) {
+    public Mono<AssemblyDTO> getAssemblyById(String assemblyId) {
         return assemblyRepository.findById(assemblyId)
-                .switchIfEmpty(Mono.error(new NotFoundAssemblyException()));
+                .switchIfEmpty(Mono.error(new NotFoundAssemblyException()))
+                .map(AssemblyDTOBuilder::build);
     }
 
     public Mono<AssemblyResultDTO> getAssemblyResult(String assemblyId) {
@@ -52,31 +58,33 @@ public class AssemblyService {
                 .map(this::buildAssemblyResult);
     }
 
-    public Flux<AssemblyEntity> getAssemblies(Pageable page) {
-        return assemblyRepository.findAllBy(page);
+    public Flux<AssemblyDTO> getAssemblies(Pageable page) {
+        return assemblyRepository.findAllBy(page)
+                .map(AssemblyDTOBuilder::build);
     }
 
-    Mono<AssemblyEntity> saveAssembly(AssemblyEntity assemblyEntity) {
+    Mono<AssemblyDTO> saveAssembly(AssemblyEntity assemblyEntity) {
         return assemblyRepository.save(assemblyEntity)
+                .map(AssemblyDTOBuilder::build)
                 .doOnSuccess(entity -> log.info("Salvo assembleia {}", entity));
     }
 
-    private AssemblyResultDTO buildAssemblyResult(AssemblyEntity assemblyEntity) {
-        List<VoteEntity> votes = assemblyEntity.getVotes();
+    private AssemblyResultDTO buildAssemblyResult(AssemblyDTO assemblyDTO) {
+        List<VoteDTO> votes = assemblyDTO.getVotes();
         Long acceptedVotesCount = votes.stream().filter(getAcceptedVotes()).count();
         Long declinedVotesCount = votes.stream().filter(getDeclinedVotes()).count();
 
         AssemblyResultEnum assemblyResult = AssemblyResultEnum.getResult(acceptedVotesCount, declinedVotesCount);
 
-        return AssemblyResultDTOBuilder.build(assemblyEntity, assemblyResult, acceptedVotesCount, declinedVotesCount);
+        return AssemblyResultDTOBuilder.build(assemblyDTO, assemblyResult, acceptedVotesCount, declinedVotesCount);
     }
 
-    private Predicate<VoteEntity> getAcceptedVotes() {
-        return voteEntity -> VoteChoiceEnum.ACCEPTED.equals(voteEntity.getVoteChoice());
+    private Predicate<VoteDTO> getAcceptedVotes() {
+        return vote -> VoteChoiceEnum.ACCEPTED.equals(vote.getVoteChoice());
     }
 
-    private Predicate<VoteEntity> getDeclinedVotes() {
-        return voteEntity -> VoteChoiceEnum.DECLINED.equals(voteEntity.getVoteChoice());
+    private Predicate<VoteDTO> getDeclinedVotes() {
+        return vote -> VoteChoiceEnum.DECLINED.equals(vote.getVoteChoice());
     }
 
 }

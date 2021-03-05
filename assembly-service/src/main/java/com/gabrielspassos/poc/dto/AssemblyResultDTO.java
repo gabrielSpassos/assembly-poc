@@ -1,6 +1,5 @@
 package com.gabrielspassos.poc.dto;
 
-import com.gabrielspassos.poc.entity.AssemblyEntity;
 import com.gabrielspassos.poc.enumerator.AssemblyResultEnum;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +11,6 @@ public class AssemblyResultDTO {
     private AssemblyResultEnum assemblyResult;
     private Long acceptedVotesCount;
     private Long declinedVotesCount;
-    private AssemblyEntity assembly;
+    private AssemblyDTO assembly;
 
 }
