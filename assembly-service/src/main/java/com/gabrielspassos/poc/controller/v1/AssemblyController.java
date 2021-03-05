@@ -2,6 +2,7 @@ package com.gabrielspassos.poc.controller.v1;
 
 import com.gabrielspassos.poc.controller.v1.request.UpdateAssemblyRequest;
 import com.gabrielspassos.poc.controller.v1.request.VoteRequest;
+import com.gabrielspassos.poc.dto.AssemblyResultDTO;
 import com.gabrielspassos.poc.entity.AssemblyEntity;
 import com.gabrielspassos.poc.entity.VoteEntity;
 import com.gabrielspassos.poc.service.AssemblyService;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
@@ -26,7 +26,6 @@ import static com.gabrielspassos.poc.config.PageConfiguration.DEFAULT_SIZE;
 @Slf4j
 @RestController
 @AllArgsConstructor
-@RequestMapping("/v1")
 public class AssemblyController implements BaseVersion {
 
     private final AssemblyService assemblyService;
@@ -66,5 +65,11 @@ public class AssemblyController implements BaseVersion {
         log.info("Criando voto em assembleia");
         return voteService.submitVote(assemblyId, voteRequest)
                 .doOnSuccess(response -> log.info("Criado voto {}", response));
+    }
+
+    @GetMapping("/assemblies/{assemblyId}/results")
+    public Mono<AssemblyResultDTO> getAssemblyResult(@PathVariable("assemblyId") String assemblyId) {
+        return assemblyService.getAssemblyResult(assemblyId)
+                .doOnSuccess(response -> log.info("Resultado da assembleia {}", response));
     }
 }
