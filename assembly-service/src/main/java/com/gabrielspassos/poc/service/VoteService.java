@@ -1,6 +1,5 @@
 package com.gabrielspassos.poc.service;
 
-import com.gabrielspassos.poc.builder.dto.AssemblyDTOBuilder;
 import com.gabrielspassos.poc.builder.dto.VoteDTOBuilder;
 import com.gabrielspassos.poc.builder.entity.AssemblyEntityBuilder;
 import com.gabrielspassos.poc.client.http.CustomerClient;
@@ -10,7 +9,6 @@ import com.gabrielspassos.poc.client.kafka.event.VoteEvent;
 import com.gabrielspassos.poc.controller.v1.request.VoteRequest;
 import com.gabrielspassos.poc.dto.AssemblyDTO;
 import com.gabrielspassos.poc.dto.VoteDTO;
-import com.gabrielspassos.poc.entity.AssemblyEntity;
 import com.gabrielspassos.poc.enumerator.CustomerStatusEnum;
 import com.gabrielspassos.poc.exception.AssemblyExpiredException;
 import com.gabrielspassos.poc.exception.AssemblyStatusInvalidException;
