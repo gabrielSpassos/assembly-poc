@@ -19,8 +19,9 @@ public class AssemblyEntityBuilder {
                 .name(createAssemblyDTO.getName())
                 .description(createAssemblyDTO.getDescription())
                 .status(AssemblyStatusEnum.CLOSED)
-                .expirationDateTime(null)
                 .registerDateTime(DateTimeUtil.now())
+                .expirationDateTime(null)
+                .updateDateTime(null)
                 .votes(new ArrayList<>())
                 .build();
     }
@@ -37,6 +38,7 @@ public class AssemblyEntityBuilder {
                 .status(assemblyDTO.getStatus())
                 .expirationDateTime(assemblyDTO.getExpirationDateTime())
                 .registerDateTime(assemblyDTO.getRegisterDateTime())
+                .updateDateTime(assemblyDTO.getUpdateDateTime())
                 .votes(votes)
                 .build();
     }

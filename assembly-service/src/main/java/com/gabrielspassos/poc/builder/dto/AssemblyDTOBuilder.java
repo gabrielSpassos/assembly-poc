@@ -20,6 +20,7 @@ public class AssemblyDTOBuilder {
                 .description(assemblyEntity.getDescription())
                 .status(assemblyEntity.getStatus())
                 .registerDateTime(assemblyEntity.getRegisterDateTime())
+                .updateDateTime(assemblyEntity.getUpdateDateTime())
                 .expirationDateTime(assemblyEntity.getExpirationDateTime())
                 .votes(votes)
                 .build();

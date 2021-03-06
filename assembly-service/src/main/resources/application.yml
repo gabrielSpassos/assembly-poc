@@ -5,6 +5,7 @@ spring:
   data:
     mongodb:
       uri: mongodb://root:password@localhost:27017/admin
+      database: admin
 
 springdoc:
   swagger-ui:
@@ -12,6 +13,7 @@ springdoc:
 
 assembly:
   default-expiration-minutes: 1
+  expire-delay-milliseconds-time: 300000 # 5 min
 
 kafka:
   bootstrap-servers: localhost:9092

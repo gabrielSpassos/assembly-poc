@@ -10,12 +10,13 @@ import com.gabrielspassos.poc.dto.AssemblyResultDTO;
 import com.gabrielspassos.poc.dto.CreateAssemblyDTO;
 import com.gabrielspassos.poc.dto.VoteDTO;
 import com.gabrielspassos.poc.entity.AssemblyEntity;
-import com.gabrielspassos.poc.entity.VoteEntity;
 import com.gabrielspassos.poc.enumerator.AssemblyResultEnum;
+import com.gabrielspassos.poc.enumerator.AssemblyStatusEnum;
 import com.gabrielspassos.poc.enumerator.VoteChoiceEnum;
 import com.gabrielspassos.poc.exception.NotFoundAssemblyException;
 import com.gabrielspassos.poc.mapper.AssemblyEntityMapper;
 import com.gabrielspassos.poc.repository.AssemblyRepository;
+import com.gabrielspassos.poc.util.DateTimeUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -23,8 +24,15 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
+
+import static com.gabrielspassos.poc.enumerator.AssemblyStatusEnum.CLOSED;
+import static com.gabrielspassos.poc.enumerator.AssemblyStatusEnum.EXPIRED;
+import static com.gabrielspassos.poc.enumerator.AssemblyStatusEnum.OPEN;
 
 @Slf4j
 @Service
@@ -63,6 +71,18 @@ public class AssemblyService {
                 .map(AssemblyDTOBuilder::build);
     }
 
+    public Flux<AssemblyDTO> expireAssemblies() {
+        List<AssemblyStatusEnum> status = List.of(OPEN, CLOSED);
+        LocalDateTime now = DateTimeUtil.now();
+        LocalDateTime fromDate = now.with(LocalTime.MIN);
+        LocalDateTime toDate = now.with(LocalTime.MAX);
+
+        return assemblyRepository.findByStatusInAndRegisterDateTimeBetween(status, fromDate, toDate)
+                .filter(isAssemblyExpired(now))
+                .map(assemblyEntity -> AssemblyEntityMapper.map(assemblyEntity, EXPIRED))
+                .flatMap(this::saveAssembly);
+    }
+
     Mono<AssemblyDTO> saveAssembly(AssemblyEntity assemblyEntity) {
         return assemblyRepository.save(assemblyEntity)
                 .map(AssemblyDTOBuilder::build)
@@ -85,6 +105,11 @@ public class AssemblyService {
 
     private Predicate<VoteDTO> getDeclinedVotes() {
         return vote -> VoteChoiceEnum.DECLINED.equals(vote.getVoteChoice());
+    }
+
+    private Predicate<AssemblyEntity> isAssemblyExpired(LocalDateTime now) {
+        return assembly -> Objects.nonNull(assembly.getExpirationDateTime())
+                && now.isAfter(assembly.getExpirationDateTime());
     }
 
 }

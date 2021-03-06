@@ -20,6 +20,7 @@ public class AssemblyEntity {
     private String description;
     private AssemblyStatusEnum status;
     private LocalDateTime registerDateTime;
+    private LocalDateTime updateDateTime;
     private LocalDateTime expirationDateTime;
     private List<VoteEntity> votes;
 
