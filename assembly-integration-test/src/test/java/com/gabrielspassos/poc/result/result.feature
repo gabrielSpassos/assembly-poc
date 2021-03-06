@@ -7,7 +7,7 @@ Feature: Result feature
     * header Accept = 'application/json'
     * header Content-Type = 'application/json'
 
-  Scenario: Get vote by id
+  Scenario: Get results by assembly id
     * def submitVoteScenario = callonce read('classpath:com/gabrielspassos/poc/vote/vote.feature@SubmitVote')
     * def assemblyId = submitVoteScenario.response.assemblyId
     Given path assembliesEndpoint, assemblyId, resultsEndpoint
