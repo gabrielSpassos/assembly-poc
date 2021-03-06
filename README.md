@@ -2,7 +2,7 @@
 
 * [Design da Solução](https://drive.google.com/file/d/1D89YICl0G12tjsUN1oOEWA4xbFs4ibZ7/view?usp=sharing) 
 * [Kafdrop](http://localhost:19000/)
-* [Assembly-Service](http://localhost:8080/webjars/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/)
+* [Assembly-Service](http://localhost:8080/swagger-ui.html)
 
 ## Como usar
 
@@ -35,6 +35,9 @@
 - ``` ./gradlew clean test ``` 
 - Obs: alguns testes podem falhar devido ao serviço 'user-service' ser randômico
 <br>
+
+- Acessar swagger da aplicação: [Swagger-UI](http://localhost:8080/swagger-ui.html)
+- Acessar kafdrop para visualização do tópico: [Kafdrop](http://localhost:19000/)
 
 
 ## Tecnologias
