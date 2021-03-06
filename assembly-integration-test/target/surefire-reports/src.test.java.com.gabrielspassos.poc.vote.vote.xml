@@ -1,0 +1,15 @@
+<testsuite failures="0" name="src/test/java/com/gabrielspassos/poc/vote/vote.feature" skipped="0" tests="1" time="0.934786">
+  <testcase classname="src.test.java.com.gabrielspassos.poc.vote.vote" name="Get vote by id" time="0.934786">
+    <system-out>* url assemblyServiceBaseUrl .............................................. passed
+* def assembliesEndpoint = '/v1/assemblies' ............................... passed
+* def votesEndpoint = 'votes' ............................................. passed
+* header Accept = 'application/json' ...................................... passed
+* header Content-Type = 'application/json' ................................ passed
+* def submitVoteScenario = callonce read('classpath:com/gabrielspassos/poc/vote/vote.feature@SubmitVote') . passed
+* def assemblyId = submitVoteScenario.response.assemblyId ................. passed
+Given path assembliesEndpoint, assemblyId, votesEndpoint .................. passed
+When method GET ........................................................... passed
+Then status 200 ........................................................... passed
+And match response contains ............................................... passed</system-out>
+  </testcase>
+</testsuite>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+      
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            
+        <meta charset="utf-8">
+            
+        <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+            
+        <link href="res/bootstrap.min.css" rel="stylesheet" type="text/css">
+            
+        <link href="res/karate-report.css" rel="stylesheet" type="text/css">
+            
+        <link href="favicon.ico" rel="shortcut icon">
+            <script src="res/jquery.min.js" type="text/javascript"></script>
+    <script src="res/jquery.tablesorter.min.js" type="text/javascript"></script>
+    <script src="res/bootstrap.min.js" type="text/javascript"></script>
+    <script src="res/karate-report.js" type="text/javascript"></script>
+    
+        <title>src.test.java.com.gabrielspassos.poc.assembly.assembly</title>
+          
+    </head>
+      
+    <body>
+            
+        <div id="root-container">
+                  
+            <div id="leftnav">
+                        
+                <div class="nav-logo">
+                              <a href="karate-summary.html">
+            <img alt="Karate" src="res/karate-logo.svg">
+          </a>
+          
+                    <div class="nav-count">
+                                    
+                        <div class="bg-success" id="nav-pass">1</div>
+                                    
+                        <div class="bg-danger" id="nav-fail">0</div>
+                                  
+                    </div>
+                            
+                </div>
+                        
+                <div id="nav-type">Scenarios</div>
+                         
+        
+                <div id="nav-date">2021-03-06 01:57:41 PM</div>
+                        
+      
+                <div class="nav-container">
+                    <div class="nav-item passed">
+                        <a href="#[4:68]">[4:68] Update assemblyById </a>
+                    </div>
+                </div>
+            </div>
+                  
+            <div id="content">
+                      
+                <div class="page-heading alert alert-primary">
+                    <a href="karate-summary.html">Summary</a><span class="feature-label">|</span><a href="karate-tags.html">Tags</a><span class="feature-label">|</span><span class="feature-label">Feature:</span><span class="feature-name">src/test/java/com/gabrielspassos/poc/assembly/assembly.feature</span><span class="feature-description">Assemblies feature</span>
+                </div>
+                <div class="scenario">
+                    <div class="scenario-heading" id="[4:68]">
+                        <div class="heading-container">
+                            <div class="scenario-tags">
+                                <a class="badge badge-primary" href="karate-tags.html">UpdateAssemblyById</a>
+                            </div>
+                            <span class="scenario-keyword">Scenario: [4:68]</span><span class="scenario-name">Update assemblyById </span>
+                        </div>
+                        <div class="scenario-time passed">ms: 492</div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-container" id="[4:68]bg">
+                            <div class="step-ref bg-step">&gt;&gt;</div>
+                            <div class="step-cell passed">Background:</div>
+                        </div>
+                        <div class="time-cell passed"></div>
+                    </div>
+                    <div class="step-row" data-parent="[4:68]bg">
+                        <div class="step-container" id="1">
+                            <div class="step-ref bg-step">1</div>
+                            <div class="step-cell passed">* url assemblyServiceBaseUrl</div>
+                        </div>
+                        <div class="time-cell passed">0</div>
+                    </div>
+                    <div class="step-row" data-parent="[4:68]bg">
+                        <div class="step-container" id="2">
+                            <div class="step-ref bg-step">2</div>
+                            <div class="step-cell passed">* def assembliesEndpoint = '/v1/assemblies'</div>
+                        </div>
+                        <div class="time-cell passed">5</div>
+                    </div>
+                    <div class="step-row" data-parent="[4:68]bg">
+                        <div class="step-container" id="3">
+                            <div class="step-ref bg-step">3</div>
+                            <div class="step-cell passed">* header Accept = 'application/json'</div>
+                        </div>
+                        <div class="time-cell passed">5</div>
+                    </div>
+                    <div class="step-row" data-parent="[4:68]bg">
+                        <div class="step-container" id="4">
+                            <div class="step-ref bg-step">4</div>
+                            <div class="step-cell passed">* header Content-Type = 'application/json'</div>
+                        </div>
+                        <div class="time-cell passed">0</div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-container" id="5">
+                            <div class="step-ref passed">5</div>
+                            <div class="step-cell passed">* def createAssemblyScenario = callonce read('classpath:com/gabrielspassos/poc/assembly/assembly.feature@CreateAssembly')</div>
+                        </div>
+                        <div class="time-cell passed">354</div>
+                    </div>
+                    <div class="preformatted" data-parent="5">13:57:41.665 &lt;&lt; lock released, cached callonce: read('classpath:com/gabrielspassos/poc/assembly/assembly.feature@CreateAssembly')</div>
+                    <div class="step-row">
+                        <div class="step-container" id="5.1">
+                            <div class="step-ref passed">&gt;&gt;</div>
+                            <div class="step-cell passed">com/gabrielspassos/poc/assembly/assembly.feature</div>
+                        </div>
+                        <div class="time-cell passed">316</div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-container" id="6">
+                            <div class="step-ref passed">6</div>
+                            <div class="step-indent"> </div>
+                            <div class="step-cell passed">* url assemblyServiceBaseUrl</div>
+                        </div>
+                        <div class="time-cell passed">0</div>
+                    </div>
+                    <div class="preformatted" data-parent="6">13:57:41.324 &gt;&gt; lock acquired, begin callonce: read('classpath:com/gabrielspassos/poc/assembly/assembly.feature@CreateAssembly')</div>
+                    <div class="step-row">
+                        <div class="step-container" id="7">
+                            <div class="step-ref passed">7</div>
+                            <div class="step-indent"> </div>
+                            <div class="step-cell passed">* def assembliesEndpoint = '/v1/assemblies'</div>
+                        </div>
+                        <div class="time-cell passed">4</div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-container" id="8">
+                            <div class="step-ref passed">8</div>
+                            <div class="step-indent"> </div>
+                            <div class="step-cell passed">* header Accept = 'application/json'</div>
+                        </div>
+                        <div class="time-cell passed">0</div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-container" id="9">
+                            <div class="step-ref passed">9</div>
+                            <div class="step-indent"> </div>
+                            <div class="step-cell passed">* header Content-Type = 'application/json'</div>
+                        </div>
+                        <div class="time-cell passed">0</div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-container" id="10">
+                            <div class="step-ref passed">10</div>
+                            <div class="step-indent"> </div>
+                            <div class="step-cell passed">Given path assembliesEndpoint</div>
+                        </div>
+                        <div class="time-cell passed">0</div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-container" id="11">
+                            <div class="step-ref passed">11</div>
+                            <div class="step-indent"> </div>
+                            <div class="step-cell passed">And request '{"name": "teste de integra&ccedil;&atilde;o", "description": "descri&ccedil;&atilde;o de integra&ccedil;&atilde;o"}'</div>
+                        </div>
+                        <div class="time-cell passed">5</div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-container" id="12">
+                            <div class="step-ref passed">12</div>
+                            <div class="step-indent"> </div>
+                            <div class="step-cell passed">When method POST</div>
+                        </div>
+                        <div class="time-cell passed">305</div>
+                    </div>
+                    <div class="preformatted" data-parent="12">13:57:41.623 request:
+1 &gt; POST http://localhost:8080/v1/assemblies
+1 &gt; Accept: application/json
+1 &gt; Accept-Encoding: gzip,deflate
+1 &gt; Connection: Keep-Alive
+1 &gt; Content-Length: 79
+1 &gt; Content-Type: application/json; charset=UTF-8
+1 &gt; Host: localhost:8080
+1 &gt; User-Agent: Apache-HttpClient/4.5.12 (Java/11.0.6)
+{"name": "teste de integra&ccedil;&atilde;o", "description": "descri&ccedil;&atilde;o de integra&ccedil;&atilde;o"}
+
+13:57:41.659 response time in milliseconds: 33,13
+1 &lt; 200
+1 &lt; Content-Length: 222
+1 &lt; Content-Type: application/json
+{"id":"6043b48554e0d7479bc2ad3e","name":"teste de integra&ccedil;&atilde;o","description":"descri&ccedil;&atilde;o de integra&ccedil;&atilde;o","status":"CLOSED","registerDateTime":"2021-03-06T13:57:41.646082","updateDateTime":null,"expirationDateTime":null}</div>
+                    <div class="step-row">
+                        <div class="step-container" id="13">
+                            <div class="step-ref passed">13</div>
+                            <div class="step-indent"> </div>
+                            <div class="step-cell passed">Then status 200</div>
+                        </div>
+                        <div class="time-cell passed">0</div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-container" id="14">
+                            <div class="step-ref passed">14</div>
+                            <div class="step-indent"> </div>
+                            <div class="step-cell passed">And match response ==</div>
+                        </div>
+                        <div class="time-cell passed">2</div>
+                    </div>
+                    <div class="preformatted" data-parent="14">{
+  "id": "#notnull",
+  "name": "teste de integra&ccedil;&atilde;o",
+  "description": "descri&ccedil;&atilde;o de integra&ccedil;&atilde;o",
+  "status": "CLOSED",
+  "registerDateTime": #notnull,
+  "updateDateTime": #null,
+  "expirationDateTime": #null
+}</div>
+                    <div class="step-row">
+                        <div class="step-container" id="15">
+                            <div class="step-ref passed">15</div>
+                            <div class="step-cell passed">* def assemblyId = createAssemblyScenario.response.id</div>
+                        </div>
+                        <div class="time-cell passed">16</div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-container" id="16">
+                            <div class="step-ref passed">16</div>
+                            <div class="step-cell passed">Given path assembliesEndpoint, assemblyId</div>
+                        </div>
+                        <div class="time-cell passed">0</div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-container" id="17">
+                            <div class="step-ref passed">17</div>
+                            <div class="step-cell passed">And request '{"expirationDateTime":null,"newStatus":"OPEN"}'</div>
+                        </div>
+                        <div class="time-cell passed">3</div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-container" id="18">
+                            <div class="step-ref passed">18</div>
+                            <div class="step-cell passed">When method PATCH</div>
+                        </div>
+                        <div class="time-cell passed">45</div>
+                    </div>
+                    <div class="preformatted" data-parent="18">13:57:41.687 request:
+1 &gt; PATCH http://localhost:8080/v1/assemblies/6043b48554e0d7479bc2ad3e
+1 &gt; Accept: application/json
+1 &gt; Accept-Encoding: gzip,deflate
+1 &gt; Connection: Keep-Alive
+1 &gt; Content-Length: 46
+1 &gt; Content-Type: application/json; charset=UTF-8
+1 &gt; Host: localhost:8080
+1 &gt; User-Agent: Apache-HttpClient/4.5.12 (Java/11.0.6)
+{"expirationDateTime":null,"newStatus":"OPEN"}
+
+13:57:41.728 response time in milliseconds: 40,12
+1 &lt; 200
+1 &lt; Content-Length: 265
+1 &lt; Content-Type: application/json
+{"id":"6043b48554e0d7479bc2ad3e","name":"teste de integra&ccedil;&atilde;o","description":"descri&ccedil;&atilde;o de integra&ccedil;&atilde;o","status":"OPEN","registerDateTime":"2021-03-06T13:57:41.646","updateDateTime":"2021-03-06T13:57:41.713216","expirationDateTime":"2021-03-06T13:58:41.713185"}</div>
+                    <div class="step-row">
+                        <div class="step-container" id="19">
+                            <div class="step-ref passed">19</div>
+                            <div class="step-cell passed">Then status 200</div>
+                        </div>
+                        <div class="time-cell passed">0</div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-container" id="20">
+                            <div class="step-ref passed">20</div>
+                            <div class="step-cell passed">And assert assemblyId == response.id</div>
+                        </div>
+                        <div class="time-cell passed">63</div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-container" id="21">
+                            <div class="step-ref passed">21</div>
+                            <div class="step-cell passed">And match response ==</div>
+                        </div>
+                        <div class="time-cell passed">1</div>
+                    </div>
+                    <div class="preformatted" data-parent="21">{
+  "id": #notnull,
+  "name": "teste de integra&ccedil;&atilde;o",
+  "description": "descri&ccedil;&atilde;o de integra&ccedil;&atilde;o",
+  "status": "OPEN",
+  "registerDateTime": #notnull,
+  "updateDateTime": #notnull,
+  "expirationDateTime": #notnull
+}</div>
+                </div>
+            </div>
+                
+        </div>
+           
+  
+    </body>
+    
+</html>
