@@ -21,13 +21,7 @@ public class AssemblyDTOStub {
                 now, null, null);
     }
 
-    public static AssemblyDTO createUpdate() {
-        LocalDateTime now = LocalDateTime.now();
-        return create("id", "name", "desc", AssemblyStatusEnum.OPEN,
-                now, now, now);
-    }
-
-    public static AssemblyDTO createToExpire(LocalDateTime expiration) {
+    public static AssemblyDTO createWithExpire(LocalDateTime expiration) {
         LocalDateTime now = LocalDateTime.now();
         return create("id", "name", "desc", AssemblyStatusEnum.OPEN,
                 now, now, expiration);
