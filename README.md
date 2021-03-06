@@ -7,25 +7,25 @@
 ## Como usar
 
 - Executar testes unitários
-
-```
-./gradlew clean test
-```
-
-Obs: Reports at ./assembly-service/build/reports/tests/test/index.html
+- ``` cd assembly-service ```
+- ``` ./gradlew clean test ```
+- Reporte em ./build/reports/tests/test/index.html
 
 
 - Executar testes de mutação
-
-```
-./gradlew pitest
-```
-
-Obs: Reports at ./assembly-service/build/reports/pitest/index.html
+- ``` cd assembly-service ```
+- ``` ./gradlew pitest ```
+- Reporte em ./build/reports/pitest/index.html
 
 
 - Buildar o projeto
+- ``` cd assembly-service ```
+- ``` ./gradlew clean build ```
 
-```
-./gradlew clean build
-```
+- Executar projeto 
+- ``` docker-compose up ```
+
+- Executar projeto de testes de integração
+- ``` cd assembly-integration-test ```
+- ``` ./gradlew clean test ``` 
+- Obs: alguns testes podem falar devido ao serviço 'user-service' ser randômico
