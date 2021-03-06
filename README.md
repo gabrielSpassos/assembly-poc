@@ -6,26 +6,31 @@
 
 ## Como usar
 
+<br>
+
 - Executar testes unitários
 - ``` cd assembly-service ```
 - ``` ./gradlew clean test ```
 - Reporte em ./build/reports/tests/test/index.html
-
+<br>
 
 - Executar testes de mutação
 - ``` cd assembly-service ```
 - ``` ./gradlew pitest ```
 - Reporte em ./build/reports/pitest/index.html
-
+<br>
 
 - Buildar o projeto
 - ``` cd assembly-service ```
 - ``` ./gradlew clean build ```
+<br>
 
 - Executar projeto 
 - ``` docker-compose up ```
+<br>
 
 - Executar projeto de testes de integração
 - ``` cd assembly-integration-test ```
 - ``` ./gradlew clean test ``` 
 - Obs: alguns testes podem falar devido ao serviço 'user-service' ser randômico
+<br>
