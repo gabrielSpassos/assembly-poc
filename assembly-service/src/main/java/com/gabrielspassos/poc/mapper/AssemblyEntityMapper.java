@@ -1,6 +1,6 @@
 package com.gabrielspassos.poc.mapper;
 
-import com.gabrielspassos.poc.controller.v1.request.UpdateAssemblyRequest;
+import com.gabrielspassos.poc.dto.UpdateAssemblyDTO;
 import com.gabrielspassos.poc.entity.AssemblyEntity;
 import com.gabrielspassos.poc.enumerator.AssemblyStatusEnum;
 import com.gabrielspassos.poc.util.DateTimeUtil;
@@ -10,10 +10,10 @@ import java.util.Objects;
 
 public class AssemblyEntityMapper {
 
-    public static AssemblyEntity map(AssemblyEntity assemblyEntity, UpdateAssemblyRequest updateAssemblyRequest,
+    public static AssemblyEntity map(AssemblyEntity assemblyEntity, UpdateAssemblyDTO updateAssemblyDTO,
                                      Long defaultExpirationMinutes) {
-        assemblyEntity.setStatus(updateAssemblyRequest.getNewStatus());
-        assemblyEntity.setExpirationDateTime(getExpirationDateTime(updateAssemblyRequest, defaultExpirationMinutes));
+        assemblyEntity.setStatus(updateAssemblyDTO.getNewStatus());
+        assemblyEntity.setExpirationDateTime(getExpirationDateTime(updateAssemblyDTO, defaultExpirationMinutes));
         assemblyEntity.setUpdateDateTime(DateTimeUtil.now());
         return assemblyEntity;
     }
@@ -24,9 +24,9 @@ public class AssemblyEntityMapper {
         return assemblyEntity;
     }
 
-    private static LocalDateTime getExpirationDateTime(UpdateAssemblyRequest updateAssemblyRequest, Long defaultExpirationMinutes) {
-        return Objects.nonNull(updateAssemblyRequest.getExpirationDateTime())
-                ? updateAssemblyRequest.getExpirationDateTime()
+    private static LocalDateTime getExpirationDateTime(UpdateAssemblyDTO updateAssemblyDTO, Long defaultExpirationMinutes) {
+        return Objects.nonNull(updateAssemblyDTO.getExpirationDateTime())
+                ? updateAssemblyDTO.getExpirationDateTime()
                 : DateTimeUtil.now().plusMinutes(defaultExpirationMinutes);
     }
 }

@@ -4,10 +4,10 @@ import com.gabrielspassos.poc.builder.dto.AssemblyDTOBuilder;
 import com.gabrielspassos.poc.builder.dto.AssemblyResultDTOBuilder;
 import com.gabrielspassos.poc.builder.entity.AssemblyEntityBuilder;
 import com.gabrielspassos.poc.config.AssemblyConfig;
-import com.gabrielspassos.poc.controller.v1.request.UpdateAssemblyRequest;
 import com.gabrielspassos.poc.dto.AssemblyDTO;
 import com.gabrielspassos.poc.dto.AssemblyResultDTO;
 import com.gabrielspassos.poc.dto.CreateAssemblyDTO;
+import com.gabrielspassos.poc.dto.UpdateAssemblyDTO;
 import com.gabrielspassos.poc.dto.VoteDTO;
 import com.gabrielspassos.poc.entity.AssemblyEntity;
 import com.gabrielspassos.poc.enumerator.AssemblyResultEnum;
@@ -47,11 +47,11 @@ public class AssemblyService {
         return saveAssembly(assemblyEntity);
     }
 
-    public Mono<AssemblyDTO> updateAssembly(String assemblyId, UpdateAssemblyRequest updateAssemblyRequest) {
+    public Mono<AssemblyDTO> updateAssembly(String assemblyId, UpdateAssemblyDTO updateAssemblyDTO) {
         return getAssemblyById(assemblyId)
                 .map(AssemblyEntityBuilder::build)
                 .map(assemblyEntity -> AssemblyEntityMapper.map(
-                        assemblyEntity, updateAssemblyRequest, assemblyConfig.getAssemblyDefaultExpirationMinutes()))
+                        assemblyEntity, updateAssemblyDTO, assemblyConfig.getAssemblyDefaultExpirationMinutes()))
                 .flatMap(this::saveAssembly);
     }
 

@@ -6,8 +6,8 @@ import com.gabrielspassos.poc.client.http.CustomerClient;
 import com.gabrielspassos.poc.client.kafka.VoteProducer;
 import com.gabrielspassos.poc.client.kafka.event.CustomerEvent;
 import com.gabrielspassos.poc.client.kafka.event.VoteEvent;
-import com.gabrielspassos.poc.controller.v1.request.VoteRequest;
 import com.gabrielspassos.poc.dto.AssemblyDTO;
+import com.gabrielspassos.poc.dto.SubmitVoteDTO;
 import com.gabrielspassos.poc.dto.VoteDTO;
 import com.gabrielspassos.poc.enumerator.CustomerStatusEnum;
 import com.gabrielspassos.poc.exception.AssemblyExpiredException;
@@ -36,15 +36,15 @@ public class VoteService {
     private final VoteProducer voteProducer;
     private final CustomerClient customerClient;
 
-    public Mono<VoteDTO> submitVote(String assemblyId, VoteRequest voteRequest) {
-        VoteDTO voteDTO = VoteDTOBuilder.build(voteRequest);
+    public Mono<VoteDTO> submitVote(String assemblyId, SubmitVoteDTO submitVoteDTO) {
+        VoteDTO voteDTO = VoteDTOBuilder.build(submitVoteDTO);
 
         return assemblyService.getAssemblyById(assemblyId)
                 .filter(assemblyDTO -> OPEN.equals(assemblyDTO.getStatus()))
                 .switchIfEmpty(Mono.error(new AssemblyStatusInvalidException()))
                 .filter(this::isAssemblyNotExpired)
                 .switchIfEmpty(Mono.error(new AssemblyExpiredException()))
-                .flatMap(assemblyEntity -> validateCustomerStatus(voteRequest.getCustomer().getCpf()))
+                .flatMap(assemblyEntity -> validateCustomerStatus(submitVoteDTO.getCustomer().getCpf()))
                 .flatMap(customerStatusEnum -> voteProducer.sendVoteToTopic(assemblyId, voteDTO));
     }
 
