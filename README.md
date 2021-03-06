@@ -32,7 +32,7 @@
 - Executar projeto de testes de integração
 - ``` cd assembly-integration-test ```
 - ``` ./gradlew clean test ``` 
-- Obs: alguns testes podem falar devido ao serviço 'user-service' ser randômico
+- Obs: alguns testes podem falhar devido ao serviço 'user-service' ser randômico
 <br>
 
 
