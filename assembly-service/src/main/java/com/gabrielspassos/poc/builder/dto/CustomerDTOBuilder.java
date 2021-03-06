@@ -1,6 +1,5 @@
 package com.gabrielspassos.poc.builder.dto;
 
-import com.gabrielspassos.poc.client.kafka.event.CustomerEvent;
 import com.gabrielspassos.poc.controller.v1.request.CustomerRequest;
 import com.gabrielspassos.poc.dto.CustomerDTO;
 import com.gabrielspassos.poc.entity.CustomerEntity;

@@ -6,12 +6,14 @@ import com.gabrielspassos.poc.dto.CreateAssemblyDTO;
 import com.gabrielspassos.poc.dto.UpdateAssemblyDTO;
 import com.gabrielspassos.poc.entity.AssemblyEntity;
 import com.gabrielspassos.poc.enumerator.AssemblyStatusEnum;
+import com.gabrielspassos.poc.exception.AssemblyStatusInvalidException;
 import com.gabrielspassos.poc.exception.NotFoundAssemblyException;
 import com.gabrielspassos.poc.repository.AssemblyRepository;
 import com.gabrielspassos.poc.stub.dto.CreateAssemblyDTOStub;
 import com.gabrielspassos.poc.stub.dto.UpdateAssemblyDTOStub;
 import com.gabrielspassos.poc.stub.entity.AssemblyEntityStub;
 import com.gabrielspassos.poc.util.DateTimeUtil;
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -125,6 +127,8 @@ class AssemblyServiceTest {
 
         given(assemblyRepository.findById("id"))
                 .willReturn(Mono.just(old));
+        given(assemblyConfig.getStatusAbleToUpdate())
+                .willReturn(Lists.newArrayList(OPEN, CLOSED));
         given(assemblyConfig.getAssemblyDefaultExpirationMinutes())
                 .willReturn(1L);
         given(assemblyRepository.save(argumentCaptor.capture()))
@@ -152,6 +156,8 @@ class AssemblyServiceTest {
 
         given(assemblyRepository.findById("id"))
                 .willReturn(Mono.just(old));
+        given(assemblyConfig.getStatusAbleToUpdate())
+                .willReturn(Lists.newArrayList(OPEN, CLOSED));
         given(assemblyConfig.getAssemblyDefaultExpirationMinutes())
                 .willReturn(1L);
         given(assemblyRepository.save(argumentCaptor.capture()))
@@ -167,6 +173,25 @@ class AssemblyServiceTest {
         assertEquals(AssemblyStatusEnum.OPEN, value.getStatus());
         assertNotNull(value.getUpdateDateTime());
         assertEquals(expiration, value.getExpirationDateTime());
+    }
+
+    @Test
+    public void shouldThrowErrorToUpdateAssembly() {
+        UpdateAssemblyDTO updateAssemblyDTO = UpdateAssemblyDTOStub.create(null);
+        AssemblyEntity expired = AssemblyEntityStub.createExpired(LocalDateTime.now().minusDays(1L));
+
+        given(assemblyRepository.findById("id"))
+                .willReturn(Mono.just(expired));
+        given(assemblyConfig.getStatusAbleToUpdate())
+                .willReturn(Lists.newArrayList(OPEN, CLOSED));
+
+        AssemblyStatusInvalidException error = assertThrows(AssemblyStatusInvalidException.class,
+                () -> assemblyService.updateAssembly("id", updateAssemblyDTO).block());
+
+        assertEquals(HttpStatus.BAD_REQUEST, error.getHttpStatus());
+        assertEquals("Assembleia em status invalido para operacao", error.getMessage());
+        assertEquals("3", error.getCode());
+        verify(assemblyRepository, never()).save(any());
     }
 
     @Test

@@ -8,6 +8,7 @@ import com.gabrielspassos.poc.dto.CreateAssemblyDTO;
 import com.gabrielspassos.poc.dto.UpdateAssemblyDTO;
 import com.gabrielspassos.poc.entity.AssemblyEntity;
 import com.gabrielspassos.poc.enumerator.AssemblyStatusEnum;
+import com.gabrielspassos.poc.exception.AssemblyStatusInvalidException;
 import com.gabrielspassos.poc.exception.NotFoundAssemblyException;
 import com.gabrielspassos.poc.mapper.AssemblyEntityMapper;
 import com.gabrielspassos.poc.repository.AssemblyRepository;
@@ -44,6 +45,8 @@ public class AssemblyService {
 
     public Mono<AssemblyDTO> updateAssembly(String assemblyId, UpdateAssemblyDTO updateAssemblyDTO) {
         return getAssemblyById(assemblyId)
+                .filter(dto -> assemblyConfig.getStatusAbleToUpdate().contains(dto.getStatus()))
+                .switchIfEmpty(Mono.error(new AssemblyStatusInvalidException()))
                 .map(AssemblyEntityBuilder::build)
                 .map(assemblyEntity -> AssemblyEntityMapper.map(
                         assemblyEntity, updateAssemblyDTO, assemblyConfig.getAssemblyDefaultExpirationMinutes()))
