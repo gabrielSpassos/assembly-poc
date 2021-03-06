@@ -2,13 +2,10 @@ package com.gabrielspassos.poc.service;
 
 import com.gabrielspassos.poc.config.AssemblyConfig;
 import com.gabrielspassos.poc.dto.AssemblyDTO;
-import com.gabrielspassos.poc.dto.AssemblyResultDTO;
 import com.gabrielspassos.poc.dto.CreateAssemblyDTO;
 import com.gabrielspassos.poc.dto.UpdateAssemblyDTO;
 import com.gabrielspassos.poc.entity.AssemblyEntity;
-import com.gabrielspassos.poc.enumerator.AssemblyResultEnum;
 import com.gabrielspassos.poc.enumerator.AssemblyStatusEnum;
-import com.gabrielspassos.poc.enumerator.VoteChoiceEnum;
 import com.gabrielspassos.poc.exception.NotFoundAssemblyException;
 import com.gabrielspassos.poc.repository.AssemblyRepository;
 import com.gabrielspassos.poc.stub.dto.CreateAssemblyDTOStub;
@@ -48,6 +45,8 @@ class AssemblyServiceTest {
     @InjectMocks
     private AssemblyService assemblyService;
     @Mock
+    private VoteService voteService;
+    @Mock
     private AssemblyConfig assemblyConfig;
     @Mock
     private AssemblyRepository assemblyRepository;
@@ -65,7 +64,6 @@ class AssemblyServiceTest {
         assertNotNull(assemblyDTOList);
         assertEquals("id", assemblyDTOList.get(0).getId());
         assertEquals(AssemblyStatusEnum.CLOSED, assemblyDTOList.get(0).getStatus());
-        assertEquals(VoteChoiceEnum.ACCEPTED, assemblyDTOList.get(0).getVotes().get(0).getVoteChoice());
     }
 
     @Test
@@ -79,7 +77,6 @@ class AssemblyServiceTest {
 
         assertEquals("id", assemblyDTO.getId());
         assertEquals("name", assemblyDTO.getName());
-        assertEquals("80050098012", assemblyDTO.getVotes().get(0).getCustomer().getCpf());
     }
 
     @Test
@@ -114,7 +111,6 @@ class AssemblyServiceTest {
         assertEquals(AssemblyStatusEnum.CLOSED, value.getStatus());
         assertEquals("name", value.getName());
         assertEquals("desc", value.getDescription());
-        assertEquals(0, value.getVotes().size());
         assertNotNull(value.getRegisterDateTime());
         assertNull(value.getUpdateDateTime());
         assertNull(value.getExpirationDateTime());
@@ -171,20 +167,6 @@ class AssemblyServiceTest {
         assertEquals(AssemblyStatusEnum.OPEN, value.getStatus());
         assertNotNull(value.getUpdateDateTime());
         assertEquals(expiration, value.getExpirationDateTime());
-    }
-
-    @Test
-    public void shouldReturnAssemblyResults() {
-        AssemblyEntity assemblyEntity = AssemblyEntityStub.create();
-
-        given(assemblyRepository.findById("id"))
-                .willReturn(Mono.just(assemblyEntity));
-
-        AssemblyResultDTO assemblyResultDTO = assemblyService.getAssemblyResult("id").block();
-
-        assertEquals(AssemblyResultEnum.ACCEPTED, assemblyResultDTO.getAssemblyResult());
-        assertEquals(1L, assemblyResultDTO.getAcceptedVotesCount());
-        assertEquals(0L, assemblyResultDTO.getDeclinedVotesCount());
     }
 
     @Test

@@ -1,9 +1,7 @@
 package com.gabrielspassos.poc.stub.entity;
 
 import com.gabrielspassos.poc.entity.AssemblyEntity;
-import com.gabrielspassos.poc.entity.VoteEntity;
 import com.gabrielspassos.poc.enumerator.AssemblyStatusEnum;
-import org.assertj.core.util.Lists;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +10,7 @@ public class AssemblyEntityStub {
     public static AssemblyEntity create() {
         LocalDateTime now = LocalDateTime.now();
         return create("id", "name", "desc", AssemblyStatusEnum.CLOSED,
-                now, now, now, VoteEntityStub.create());
+                now, now, now);
     }
 
     public static AssemblyEntity createNew() {
@@ -41,7 +39,7 @@ public class AssemblyEntityStub {
 
     public static AssemblyEntity create(String id, String name, String description, AssemblyStatusEnum status,
                                         LocalDateTime registerDateTime, LocalDateTime updateDateTime,
-                                        LocalDateTime expirationDateTime, VoteEntity... votes) {
+                                        LocalDateTime expirationDateTime) {
         return AssemblyEntity.builder()
                 .id(id)
                 .name(name)
@@ -50,7 +48,6 @@ public class AssemblyEntityStub {
                 .registerDateTime(registerDateTime)
                 .updateDateTime(updateDateTime)
                 .expirationDateTime(expirationDateTime)
-                .votes(Lists.newArrayList(votes))
                 .build();
     }
 }

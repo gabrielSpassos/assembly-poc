@@ -3,8 +3,6 @@ package com.gabrielspassos.poc.controller.v1.response;
 import com.gabrielspassos.poc.enumerator.AssemblyStatusEnum;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 public class AssemblyResponse {
 
@@ -15,6 +13,5 @@ public class AssemblyResponse {
     private String registerDateTime;
     private String updateDateTime;
     private String expirationDateTime;
-    private List<VoteResponse> votes;
 
 }

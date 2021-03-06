@@ -8,6 +8,8 @@ import lombok.Data;
 @Builder
 public class VoteDTO {
 
+    private String id;
+    private String assemblyId;
     private VoteChoiceEnum voteChoice;
     private CustomerDTO customer;
 

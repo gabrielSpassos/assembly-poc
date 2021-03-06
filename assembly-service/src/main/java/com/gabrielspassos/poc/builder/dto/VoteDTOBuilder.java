@@ -1,6 +1,5 @@
 package com.gabrielspassos.poc.builder.dto;
 
-import com.gabrielspassos.poc.client.kafka.event.VoteEvent;
 import com.gabrielspassos.poc.dto.CustomerDTO;
 import com.gabrielspassos.poc.dto.SubmitVoteDTO;
 import com.gabrielspassos.poc.dto.VoteDTO;
@@ -12,25 +11,20 @@ public class VoteDTOBuilder {
         CustomerDTO customer = CustomerDTOBuilder.build(voteEntity.getCustomer());
 
         return VoteDTO.builder()
+                .id(voteEntity.getId())
+                .assemblyId(voteEntity.getAssemblyId())
                 .voteChoice(voteEntity.getVoteChoice())
                 .customer(customer)
                 .build();
     }
 
-    public static VoteDTO build(SubmitVoteDTO submitVoteDTO) {
+    public static VoteDTO build(String assemblyId, SubmitVoteDTO submitVoteDTO) {
         CustomerDTO customer = submitVoteDTO.getCustomer();
 
         return VoteDTO.builder()
+                .id(null)
+                .assemblyId(assemblyId)
                 .voteChoice(submitVoteDTO.getChoice())
-                .customer(customer)
-                .build();
-    }
-
-    public static VoteDTO build(VoteEvent voteEvent) {
-        CustomerDTO customer = CustomerDTOBuilder.build(voteEvent.getCustomer());
-
-        return VoteDTO.builder()
-                .voteChoice(voteEvent.getVoteChoice())
                 .customer(customer)
                 .build();
     }

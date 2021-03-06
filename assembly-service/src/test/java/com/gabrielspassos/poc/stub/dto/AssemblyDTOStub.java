@@ -1,9 +1,7 @@
 package com.gabrielspassos.poc.stub.dto;
 
 import com.gabrielspassos.poc.dto.AssemblyDTO;
-import com.gabrielspassos.poc.dto.VoteDTO;
 import com.gabrielspassos.poc.enumerator.AssemblyStatusEnum;
-import org.assertj.core.util.Lists;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +10,7 @@ public class AssemblyDTOStub {
     public static AssemblyDTO create() {
         LocalDateTime now = LocalDateTime.now();
         return create("id", "name", "desc", AssemblyStatusEnum.CLOSED,
-                now, now, now, VoteDTOStub.create());
+                now, now, now);
     }
 
     public static AssemblyDTO createNew() {
@@ -29,7 +27,7 @@ public class AssemblyDTOStub {
 
     public static AssemblyDTO create(String id, String name, String description, AssemblyStatusEnum status,
                                         LocalDateTime registerDateTime, LocalDateTime updateDateTime,
-                                        LocalDateTime expirationDateTime, VoteDTO... votes) {
+                                        LocalDateTime expirationDateTime) {
         return AssemblyDTO.builder()
                 .id(id)
                 .name(name)
@@ -38,7 +36,6 @@ public class AssemblyDTOStub {
                 .registerDateTime(registerDateTime)
                 .updateDateTime(updateDateTime)
                 .expirationDateTime(expirationDateTime)
-                .votes(Lists.newArrayList(votes))
                 .build();
     }
 }

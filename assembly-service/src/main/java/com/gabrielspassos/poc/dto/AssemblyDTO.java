@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Builder
@@ -18,6 +17,5 @@ public class AssemblyDTO {
     private LocalDateTime registerDateTime;
     private LocalDateTime updateDateTime;
     private LocalDateTime expirationDateTime;
-    private List<VoteDTO> votes;
 
 }

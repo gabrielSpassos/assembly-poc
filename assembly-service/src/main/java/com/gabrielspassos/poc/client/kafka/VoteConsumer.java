@@ -26,8 +26,7 @@ public class VoteConsumer {
             log.info("Partição {}, Offset {}, Mensagem: {}", partition, offset, event);
             VoteEvent voteEvent = convertValue(event);
             voteService.addVoteToAssembly(voteEvent)
-                    .collectList()
-                    .doOnSuccess(voteEntities -> log.info("Votes {}", voteEntities))
+                    .doOnSuccess(voteDTO -> log.info("Voto salvo {}", voteDTO))
                     .doFinally(signalType -> ack.acknowledge())
                     .subscribe();
         } catch (Exception e) {

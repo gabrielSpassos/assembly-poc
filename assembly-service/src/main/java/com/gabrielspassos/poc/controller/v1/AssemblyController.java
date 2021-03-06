@@ -10,6 +10,7 @@ import com.gabrielspassos.poc.controller.v1.response.VoteResponse;
 import com.gabrielspassos.poc.dto.CreateAssemblyDTO;
 import com.gabrielspassos.poc.dto.SubmitVoteDTO;
 import com.gabrielspassos.poc.dto.UpdateAssemblyDTO;
+import com.gabrielspassos.poc.service.AssemblyResultService;
 import com.gabrielspassos.poc.service.AssemblyService;
 import com.gabrielspassos.poc.service.VoteService;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,7 @@ public class AssemblyController implements BaseVersion {
 
     private final AssemblyService assemblyService;
     private final VoteService voteService;
+    private final AssemblyResultService assemblyResultService;
     private final ModelMapper modelMapper;
 
     @GetMapping("/assemblies")
@@ -78,17 +80,25 @@ public class AssemblyController implements BaseVersion {
     @PostMapping("/assemblies/{assemblyId}/votes")
     public Mono<VoteResponse> submitVoteAtAssembly(@PathVariable("assemblyId") String assemblyId,
                                                    @RequestBody VoteRequest voteRequest) {
-        log.info("Criando voto em assembleia");
+        log.info("Criando voto {} em assembleia {}", voteRequest, assemblyId);
         SubmitVoteDTO submitVoteDTO = SubmitVoteDTOBuilder.build(voteRequest);
         return voteService.submitVote(assemblyId, submitVoteDTO)
                 .map(dto -> modelMapper.map(dto, VoteResponse.class))
                 .doOnSuccess(response -> log.info("Criado voto {}", response));
     }
 
+    @GetMapping("/assemblies/{assemblyId}/votes")
+    public Flux<VoteResponse> getVotesByAssemblyId(@PathVariable("assemblyId") String assemblyId) {
+        log.info("Buscando votos da assembleia {}", assemblyId);
+        return voteService.getVotesByAssemblyId(assemblyId)
+                .map(dto -> modelMapper.map(dto, VoteResponse.class))
+                .doOnComplete(() -> log.info("Finalizado busca de votos da assembleia {}", assemblyId));
+    }
+
     @GetMapping("/assemblies/{assemblyId}/results")
     public Mono<AssemblyResultResponse> getAssemblyResult(@PathVariable("assemblyId") String assemblyId) {
         log.info("Buscando resultado da assembleia {}", assemblyId);
-        return assemblyService.getAssemblyResult(assemblyId)
+        return assemblyResultService.getAssemblyResult(assemblyId)
                 .map(dto -> modelMapper.map(dto, AssemblyResultResponse.class))
                 .doOnSuccess(response -> log.info("Resultado da assembleia {}", response));
     }

@@ -1,18 +1,13 @@
 package com.gabrielspassos.poc.service;
 
 import com.gabrielspassos.poc.builder.dto.AssemblyDTOBuilder;
-import com.gabrielspassos.poc.builder.dto.AssemblyResultDTOBuilder;
 import com.gabrielspassos.poc.builder.entity.AssemblyEntityBuilder;
 import com.gabrielspassos.poc.config.AssemblyConfig;
 import com.gabrielspassos.poc.dto.AssemblyDTO;
-import com.gabrielspassos.poc.dto.AssemblyResultDTO;
 import com.gabrielspassos.poc.dto.CreateAssemblyDTO;
 import com.gabrielspassos.poc.dto.UpdateAssemblyDTO;
-import com.gabrielspassos.poc.dto.VoteDTO;
 import com.gabrielspassos.poc.entity.AssemblyEntity;
-import com.gabrielspassos.poc.enumerator.AssemblyResultEnum;
 import com.gabrielspassos.poc.enumerator.AssemblyStatusEnum;
-import com.gabrielspassos.poc.enumerator.VoteChoiceEnum;
 import com.gabrielspassos.poc.exception.NotFoundAssemblyException;
 import com.gabrielspassos.poc.mapper.AssemblyEntityMapper;
 import com.gabrielspassos.poc.repository.AssemblyRepository;
@@ -33,8 +28,6 @@ import java.util.function.Predicate;
 import static com.gabrielspassos.poc.enumerator.AssemblyStatusEnum.CLOSED;
 import static com.gabrielspassos.poc.enumerator.AssemblyStatusEnum.EXPIRED;
 import static com.gabrielspassos.poc.enumerator.AssemblyStatusEnum.OPEN;
-import static com.gabrielspassos.poc.enumerator.VoteChoiceEnum.ACCEPTED;
-import static com.gabrielspassos.poc.enumerator.VoteChoiceEnum.DECLINED;
 
 @Slf4j
 @Service
@@ -63,11 +56,6 @@ public class AssemblyService {
                 .map(AssemblyDTOBuilder::build);
     }
 
-    public Mono<AssemblyResultDTO> getAssemblyResult(String assemblyId) {
-        return getAssemblyById(assemblyId)
-                .map(this::buildAssemblyResult);
-    }
-
     public Flux<AssemblyDTO> getAssemblies(Pageable page) {
         return assemblyRepository.findAllBy(page)
                 .map(AssemblyDTOBuilder::build);
@@ -85,24 +73,10 @@ public class AssemblyService {
                 .flatMap(this::saveAssembly);
     }
 
-    Mono<AssemblyDTO> saveAssembly(AssemblyEntity assemblyEntity) {
+    private Mono<AssemblyDTO> saveAssembly(AssemblyEntity assemblyEntity) {
         return assemblyRepository.save(assemblyEntity)
                 .map(AssemblyDTOBuilder::build)
                 .doOnSuccess(entity -> log.info("Salvo assembleia {}", entity));
-    }
-
-    private AssemblyResultDTO buildAssemblyResult(AssemblyDTO assemblyDTO) {
-        List<VoteDTO> votes = assemblyDTO.getVotes();
-        Long acceptedVotesCount = votes.stream().filter(filterByVoteChoice(ACCEPTED)).count();
-        Long declinedVotesCount = votes.stream().filter(filterByVoteChoice(DECLINED)).count();
-
-        AssemblyResultEnum assemblyResult = AssemblyResultEnum.getResult(acceptedVotesCount, declinedVotesCount);
-
-        return AssemblyResultDTOBuilder.build(assemblyDTO, assemblyResult, acceptedVotesCount, declinedVotesCount);
-    }
-
-    private Predicate<VoteDTO> filterByVoteChoice(VoteChoiceEnum choice) {
-        return vote -> choice.equals(vote.getVoteChoice());
     }
 
     private Predicate<AssemblyEntity> isAssemblyExpired(LocalDateTime now) {

@@ -2,6 +2,7 @@ package com.gabrielspassos.poc.controller.v1;
 
 import com.gabrielspassos.poc.dto.AssemblyDTO;
 import com.gabrielspassos.poc.dto.CreateAssemblyDTO;
+import com.gabrielspassos.poc.service.AssemblyResultService;
 import com.gabrielspassos.poc.service.AssemblyService;
 import com.gabrielspassos.poc.service.VoteService;
 import com.gabrielspassos.poc.stub.dto.AssemblyDTOStub;
@@ -30,13 +31,15 @@ class AssemblyControllerTest {
     private AssemblyService assemblyService;
     @Mock
     private VoteService voteService;
+    @Mock
+    private AssemblyResultService assemblyResultService;
     @Spy
     private ModelMapper modelMapper;
 
     @BeforeEach
     public void setUp() {
         webTestClient = WebTestClient
-                .bindToController(new AssemblyController(assemblyService, voteService, modelMapper))
+                .bindToController(new AssemblyController(assemblyService, voteService, assemblyResultService, modelMapper))
                 .configureClient()
                 .build();
     }

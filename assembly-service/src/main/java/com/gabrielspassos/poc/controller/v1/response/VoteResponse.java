@@ -6,6 +6,8 @@ import lombok.Data;
 @Data
 public class VoteResponse {
 
+    private String id;
+    private String assemblyId;
     private VoteChoiceEnum voteChoice;
     private CustomerResponse customer;
 
