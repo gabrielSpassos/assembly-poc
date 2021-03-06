@@ -26,6 +26,7 @@
 <br>
 
 - Executar projeto 
+- ``` docker-compose build ```
 - ``` docker-compose up ```
 <br>
 
@@ -47,3 +48,5 @@
 * **Pitest**: capaz de executar testes de mutação no código para avaliar qualidade do mesmo
 * **Lombok**: plugin para auxiliar na limpeza de código dos POJO's
 * **Swagger**: auxilio na documentação dos endpoints
+* **Docker**: ferramenta para criar o ambiente com os containers necessários para solução proposta
+* **Docker Compose**: orquestração dos containers
