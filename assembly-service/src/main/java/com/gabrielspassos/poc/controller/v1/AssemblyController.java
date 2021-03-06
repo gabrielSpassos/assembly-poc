@@ -1,6 +1,5 @@
 package com.gabrielspassos.poc.controller.v1;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gabrielspassos.poc.builder.dto.SubmitVoteDTOBuilder;
 import com.gabrielspassos.poc.controller.v1.request.CreateAssemblyRequest;
 import com.gabrielspassos.poc.controller.v1.request.UpdateAssemblyRequest;
@@ -15,6 +14,7 @@ import com.gabrielspassos.poc.service.AssemblyService;
 import com.gabrielspassos.poc.service.VoteService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -36,7 +36,7 @@ public class AssemblyController implements BaseVersion {
 
     private final AssemblyService assemblyService;
     private final VoteService voteService;
-    private final ObjectMapper objectMapper;
+    private final ModelMapper modelMapper;
 
     @GetMapping("/assemblies")
     public Flux<AssemblyResponse> getAssemblies(@RequestParam(required = false, defaultValue = DEFAULT_PAGE) Integer page,
@@ -44,16 +44,16 @@ public class AssemblyController implements BaseVersion {
         log.info("Iniciado busca de assembleias na página {} e tamanho {}", page, size);
         PageRequest pageRequest = PageRequest.of(page, size);
         return assemblyService.getAssemblies(pageRequest)
-                .map(dto -> objectMapper.convertValue(dto, AssemblyResponse.class))
+                .map(dto -> modelMapper.map(dto, AssemblyResponse.class))
                 .doOnComplete(() -> log.info("Finalizado consulta de assembleias"));
     }
 
     @PostMapping("/assemblies")
     public Mono<AssemblyResponse> createAssembly(@RequestBody CreateAssemblyRequest createAssemblyRequest) {
         log.info("Iniciado a criação de assembleia, {}", createAssemblyRequest);
-        CreateAssemblyDTO createAssemblyDTO = objectMapper.convertValue(createAssemblyRequest, CreateAssemblyDTO.class);
+        CreateAssemblyDTO createAssemblyDTO = modelMapper.map(createAssemblyRequest, CreateAssemblyDTO.class);
         return assemblyService.createAssembly(createAssemblyDTO)
-                .map(dto -> objectMapper.convertValue(dto, AssemblyResponse.class))
+                .map(dto -> modelMapper.map(dto, AssemblyResponse.class))
                 .doOnSuccess(response -> log.info("Criado assembleia {}", response));
     }
 
@@ -61,7 +61,7 @@ public class AssemblyController implements BaseVersion {
     public Mono<AssemblyResponse> getAssemblyById(@PathVariable("assemblyId") String assemblyId) {
         log.info("Buscando assembleia id {}", assemblyId);
         return assemblyService.getAssemblyById(assemblyId)
-                .map(dto -> objectMapper.convertValue(dto, AssemblyResponse.class))
+                .map(dto -> modelMapper.map(dto, AssemblyResponse.class))
                 .doOnSuccess(response -> log.info("Encontrado assembleia {}", response));
     }
 
@@ -69,9 +69,9 @@ public class AssemblyController implements BaseVersion {
     public Mono<AssemblyResponse> updateAssemblyById(@PathVariable("assemblyId") String assemblyId,
                                                      @RequestBody UpdateAssemblyRequest updateAssemblyRequest) {
         log.info("Atualizando assembleia id {} para {}", assemblyId, updateAssemblyRequest);
-        UpdateAssemblyDTO updateAssemblyDTO = objectMapper.convertValue(updateAssemblyRequest, UpdateAssemblyDTO.class);
+        UpdateAssemblyDTO updateAssemblyDTO = modelMapper.map(updateAssemblyRequest, UpdateAssemblyDTO.class);
         return assemblyService.updateAssembly(assemblyId, updateAssemblyDTO)
-                .map(dto -> objectMapper.convertValue(dto, AssemblyResponse.class))
+                .map(dto -> modelMapper.map(dto, AssemblyResponse.class))
                 .doOnSuccess(response -> log.info("Atualizado assembleia {}", response));
     }
 
@@ -81,7 +81,7 @@ public class AssemblyController implements BaseVersion {
         log.info("Criando voto em assembleia");
         SubmitVoteDTO submitVoteDTO = SubmitVoteDTOBuilder.build(voteRequest);
         return voteService.submitVote(assemblyId, submitVoteDTO)
-                .map(dto -> objectMapper.convertValue(dto, VoteResponse.class))
+                .map(dto -> modelMapper.map(dto, VoteResponse.class))
                 .doOnSuccess(response -> log.info("Criado voto {}", response));
     }
 
@@ -89,7 +89,7 @@ public class AssemblyController implements BaseVersion {
     public Mono<AssemblyResultResponse> getAssemblyResult(@PathVariable("assemblyId") String assemblyId) {
         log.info("Buscando resultado da assembleia {}", assemblyId);
         return assemblyService.getAssemblyResult(assemblyId)
-                .map(dto -> objectMapper.convertValue(dto, AssemblyResultResponse.class))
+                .map(dto -> modelMapper.map(dto, AssemblyResultResponse.class))
                 .doOnSuccess(response -> log.info("Resultado da assembleia {}", response));
     }
 }

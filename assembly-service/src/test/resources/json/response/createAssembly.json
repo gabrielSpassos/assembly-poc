@@ -1,0 +1,10 @@
+{
+  "id": "id",
+  "name": "name",
+  "description": "desc",
+  "status": "CLOSED",
+  "registerDateTime": "2021-03-05T23:38:32",
+  "updateDateTime": null,
+  "expirationDateTime": null,
+  "votes": []
+}
