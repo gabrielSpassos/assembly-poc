@@ -7,7 +7,6 @@ import com.gabrielspassos.poc.dto.SubmitVoteDTO;
 import com.gabrielspassos.poc.dto.UpdateAssemblyDTO;
 import com.gabrielspassos.poc.dto.VoteDTO;
 import com.gabrielspassos.poc.enumerator.AssemblyResultEnum;
-import com.gabrielspassos.poc.enumerator.VoteChoiceEnum;
 import com.gabrielspassos.poc.service.AssemblyResultService;
 import com.gabrielspassos.poc.service.AssemblyService;
 import com.gabrielspassos.poc.service.VoteService;

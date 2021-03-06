@@ -31,6 +31,7 @@ public class VoteConsumer {
                     .subscribe();
         } catch (Exception e) {
             log.error(String.format("Erro ao processar a mensagem de resposta de pagamento %s", event), e);
+            throw e;
         }
     }
 
