@@ -14,7 +14,7 @@ class JsonUtilTest {
 
         String stringJson = JsonUtil.getStringJson(voteEvent);
 
-        assertEquals("{\"assemblyId\":\"assemblyId\",\"voteChoice\":\"ACCEPTED\",\"customer\":{\"id\":\"1\",\"cpf\":\"72031483005\"}}", stringJson);
+        assertEquals("{\"assemblyId\":\"assemblyId\",\"voteChoice\":\"ACCEPTED\",\"customer\":{\"id\":\"1\",\"cpf\":\"80050098012\"}}", stringJson);
     }
 
 }

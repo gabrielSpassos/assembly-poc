@@ -7,17 +7,25 @@ import com.gabrielspassos.poc.enumerator.VoteChoiceEnum;
 public class VoteEventStub {
 
     public static VoteEvent create() {
+        return create("assemblyId", VoteChoiceEnum.ACCEPTED, customerEvent());
+    }
+
+    public static VoteEvent create(String assemblyId, VoteChoiceEnum voteChoice, CustomerEvent customerEvent) {
         VoteEvent voteEvent = new VoteEvent();
-        voteEvent.setAssemblyId("assemblyId");
-        voteEvent.setVoteChoice(VoteChoiceEnum.ACCEPTED);
-        voteEvent.setCustomer(customerEvent());
+        voteEvent.setAssemblyId(assemblyId);
+        voteEvent.setVoteChoice(voteChoice);
+        voteEvent.setCustomer(customerEvent);
         return voteEvent;
     }
 
-    private static CustomerEvent customerEvent() {
+    public static CustomerEvent customerEvent(String id, String cpf) {
         CustomerEvent customerEvent = new CustomerEvent();
-        customerEvent.setId("1");
-        customerEvent.setCpf("72031483005");
+        customerEvent.setId(id);
+        customerEvent.setCpf(cpf);
         return customerEvent;
+    }
+
+    private static CustomerEvent customerEvent() {
+        return customerEvent("1", "80050098012");
     }
 }

@@ -11,10 +11,6 @@ public class CustomerDTOBuilder {
         return buildCustomer(customerRequest.getId(), customerRequest.getCpf());
     }
 
-    public static CustomerDTO build(CustomerEvent customerEvent) {
-        return buildCustomer(customerEvent.getId(), customerEvent.getCpf());
-    }
-
     public static CustomerDTO build(CustomerEntity customerEntity) {
         return buildCustomer(customerEntity.getId(), customerEntity.getCpf());
     }

@@ -7,12 +7,12 @@ import com.gabrielspassos.poc.enumerator.VoteChoiceEnum;
 public class VoteDTOStub {
 
     public static VoteDTO create() {
-        return create("id", VoteChoiceEnum.ACCEPTED, CustomerDTOStub.create());
+        return create(null, "id", VoteChoiceEnum.ACCEPTED, CustomerDTOStub.create());
     }
 
-    public static VoteDTO create(String assemblyId, VoteChoiceEnum choice, CustomerDTO customer) {
+    public static VoteDTO create(String voteId, String assemblyId, VoteChoiceEnum choice, CustomerDTO customer) {
         return VoteDTO.builder()
-                .id(null)
+                .id(voteId)
                 .assemblyId(assemblyId)
                 .voteChoice(choice)
                 .customer(customer)

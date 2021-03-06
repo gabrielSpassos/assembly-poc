@@ -7,11 +7,13 @@ import com.gabrielspassos.poc.enumerator.VoteChoiceEnum;
 public class VoteEntityStub {
 
     public static VoteEntity create() {
-        return create(VoteChoiceEnum.ACCEPTED, CustomerEntityStub.create());
+        return create("voteId", "assemblyId", VoteChoiceEnum.ACCEPTED, CustomerEntityStub.create());
     }
 
-    public static VoteEntity create(VoteChoiceEnum choice, CustomerEntity customer) {
+    public static VoteEntity create(String id, String assemblyId, VoteChoiceEnum choice, CustomerEntity customer) {
         return VoteEntity.builder()
+                .id(id)
+                .assemblyId(assemblyId)
                 .voteChoice(choice)
                 .customer(customer)
                 .build();

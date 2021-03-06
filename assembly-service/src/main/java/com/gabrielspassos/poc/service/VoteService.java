@@ -57,7 +57,7 @@ public class VoteService {
                 .flatMap(customerStatusEnum -> voteProducer.sendVoteToTopic(assemblyId, voteDTO));
     }
 
-    public Mono<VoteDTO> addVoteToAssembly(VoteEvent voteEvent) {
+    public Mono<VoteDTO> createVote(VoteEvent voteEvent) {
         return getVotesByAssemblyId(voteEvent.getAssemblyId())
                 .collectList()
                 .filter(votes -> isCustomerVoteValid(votes, voteEvent))
