@@ -4,7 +4,7 @@ spring:
     port: 8080
   data:
     mongodb:
-      uri: mongodb://root:password@localhost:27017/admin
+      uri: mongodb://root:password@${MONGO_URL:localhost}:27017/admin
       database: admin
 
 springdoc:
@@ -16,7 +16,7 @@ assembly:
   expire-delay-milliseconds-time: 300000 # 5 min
 
 kafka:
-  bootstrap-servers: localhost:9092
+  bootstrap-servers: ${KAFKA_URL:localhost}:9092
   votes-topic: votes-request-topic
   consumer-group: assembly-service
   topic:
