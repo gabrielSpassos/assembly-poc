@@ -1,6 +1,7 @@
 package com.gabrielspassos.poc.controller.v1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gabrielspassos.poc.builder.dto.SubmitVoteDTOBuilder;
 import com.gabrielspassos.poc.controller.v1.request.CreateAssemblyRequest;
 import com.gabrielspassos.poc.controller.v1.request.UpdateAssemblyRequest;
 import com.gabrielspassos.poc.controller.v1.request.VoteRequest;
@@ -78,7 +79,7 @@ public class AssemblyController implements BaseVersion {
     public Mono<VoteResponse> submitVoteAtAssembly(@PathVariable("assemblyId") String assemblyId,
                                                    @RequestBody VoteRequest voteRequest) {
         log.info("Criando voto em assembleia");
-        SubmitVoteDTO submitVoteDTO = objectMapper.convertValue(voteRequest, SubmitVoteDTO.class);
+        SubmitVoteDTO submitVoteDTO = SubmitVoteDTOBuilder.build(voteRequest);
         return voteService.submitVote(assemblyId, submitVoteDTO)
                 .map(dto -> objectMapper.convertValue(dto, VoteResponse.class))
                 .doOnSuccess(response -> log.info("Criado voto {}", response));

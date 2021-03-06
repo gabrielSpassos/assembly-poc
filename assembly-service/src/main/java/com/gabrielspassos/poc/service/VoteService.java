@@ -14,6 +14,7 @@ import com.gabrielspassos.poc.exception.AssemblyExpiredException;
 import com.gabrielspassos.poc.exception.AssemblyStatusInvalidException;
 import com.gabrielspassos.poc.exception.CustomerInvalidVoteException;
 import com.gabrielspassos.poc.exception.CustomerNotAbleToVoteException;
+import com.gabrielspassos.poc.exception.InvalidVoteChoiceException;
 import com.gabrielspassos.poc.util.DateTimeUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ import java.util.Objects;
 
 import static com.gabrielspassos.poc.enumerator.AssemblyStatusEnum.OPEN;
 import static com.gabrielspassos.poc.enumerator.CustomerStatusEnum.ABLE_TO_VOTE;
+import static java.util.Objects.nonNull;
 
 @Slf4j
 @Service
@@ -39,7 +41,10 @@ public class VoteService {
     public Mono<VoteDTO> submitVote(String assemblyId, SubmitVoteDTO submitVoteDTO) {
         VoteDTO voteDTO = VoteDTOBuilder.build(submitVoteDTO);
 
-        return assemblyService.getAssemblyById(assemblyId)
+        return Mono.just(submitVoteDTO)
+                .filter(submitDTO -> nonNull(submitDTO.getChoice()))
+                .switchIfEmpty(Mono.error(new InvalidVoteChoiceException()))
+                .flatMap(dto -> assemblyService.getAssemblyById(assemblyId))
                 .filter(assemblyDTO -> OPEN.equals(assemblyDTO.getStatus()))
                 .switchIfEmpty(Mono.error(new AssemblyStatusInvalidException()))
                 .filter(this::isAssemblyNotExpired)
