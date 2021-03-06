@@ -44,5 +44,6 @@
 * **JUnit 5**: versão atualizada do framework, com novas features facilitando a criação de testes unitários
 * **Karate**: abstração do framework Cucumber, faciliando a construção dos testes de integração. [Karate Docs](https://intuit.github.io/karate/) 
 * **Wiremock**: depencia de testes capaz de criar um server de mock para executar os testes de clients. [Wiremock Docs](http://wiremock.org/)
+* **Pitest**: capaz de executar testes de mutação no código para avaliar qualidade do mesmo
 * **Lombok**: plugin para auxiliar na limpeza de código dos POJO's
 * **Swagger**: auxilio na documentação dos endpoints
