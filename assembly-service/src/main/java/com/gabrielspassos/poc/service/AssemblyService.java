@@ -33,6 +33,8 @@ import java.util.function.Predicate;
 import static com.gabrielspassos.poc.enumerator.AssemblyStatusEnum.CLOSED;
 import static com.gabrielspassos.poc.enumerator.AssemblyStatusEnum.EXPIRED;
 import static com.gabrielspassos.poc.enumerator.AssemblyStatusEnum.OPEN;
+import static com.gabrielspassos.poc.enumerator.VoteChoiceEnum.ACCEPTED;
+import static com.gabrielspassos.poc.enumerator.VoteChoiceEnum.DECLINED;
 
 @Slf4j
 @Service
@@ -91,20 +93,16 @@ public class AssemblyService {
 
     private AssemblyResultDTO buildAssemblyResult(AssemblyDTO assemblyDTO) {
         List<VoteDTO> votes = assemblyDTO.getVotes();
-        Long acceptedVotesCount = votes.stream().filter(getAcceptedVotes()).count();
-        Long declinedVotesCount = votes.stream().filter(getDeclinedVotes()).count();
+        Long acceptedVotesCount = votes.stream().filter(filterByVoteChoice(ACCEPTED)).count();
+        Long declinedVotesCount = votes.stream().filter(filterByVoteChoice(DECLINED)).count();
 
         AssemblyResultEnum assemblyResult = AssemblyResultEnum.getResult(acceptedVotesCount, declinedVotesCount);
 
         return AssemblyResultDTOBuilder.build(assemblyDTO, assemblyResult, acceptedVotesCount, declinedVotesCount);
     }
 
-    private Predicate<VoteDTO> getAcceptedVotes() {
-        return vote -> VoteChoiceEnum.ACCEPTED.equals(vote.getVoteChoice());
-    }
-
-    private Predicate<VoteDTO> getDeclinedVotes() {
-        return vote -> VoteChoiceEnum.DECLINED.equals(vote.getVoteChoice());
+    private Predicate<VoteDTO> filterByVoteChoice(VoteChoiceEnum choice) {
+        return vote -> choice.equals(vote.getVoteChoice());
     }
 
     private Predicate<AssemblyEntity> isAssemblyExpired(LocalDateTime now) {
