@@ -37,6 +37,17 @@
 - Obs: alguns testes podem falhar devido ao serviço 'user-service' ser randômico
 <br>
 
+- Executar os testes de stress
+- Faça o Download do [Gatling](https://gatling.io/open-source/start-testing/)
+- Faça o unzip dos arquivos do Gatling
+- Coloque toda a pasta [assembly] no caminho `${your_gatling_folder}/user_files/simulations/`
+- Ajustar a variavel `assemblyId` para o id de um assembleia aberta
+- ``` ./bin/gatling.sh ```
+- Selecionar no console o número da opção `assembly.AssemblySimulation`
+- Reporte em ${your_gatling_folder}/results/assemblysimulation-*/index.html
+- Obs: nesses testes o cenário onde o usuário não está apto para votar (HttpStatus 404) está sendo considerado como sucesso.
+
+
 - Acessar swagger da aplicação: [Swagger-UI](http://localhost:8080/swagger-ui.html)
 - Acessar kafdrop para visualização do tópico: [Kafdrop](http://localhost:19000/)
 
