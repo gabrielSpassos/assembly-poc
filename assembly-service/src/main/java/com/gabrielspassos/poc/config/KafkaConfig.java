@@ -24,6 +24,9 @@ public class KafkaConfig {
     @Value("${kafka.votes-topic}")
     private String votesTopic;
 
+    @Value("${kafka.assembly-result-topic}")
+    private String assemblyResultTopic;
+
     @Value("${kafka.consumer-group}")
     private String consumerGroup;
 

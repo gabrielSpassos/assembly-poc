@@ -1,5 +1,6 @@
 package com.gabrielspassos.poc.scheduler;
 
+import com.gabrielspassos.poc.service.AssemblyResultService;
 import com.gabrielspassos.poc.service.AssemblyService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 public class ExpireAssemblyScheduler {
 
     private final AssemblyService assemblyService;
+    private final AssemblyResultService assemblyResultService;
 
     @Scheduled(fixedDelayString = "${assembly.expire-delay-milliseconds-time}")
     @SchedulerLock(
@@ -25,6 +27,7 @@ public class ExpireAssemblyScheduler {
         LockAssert.assertLocked();
         log.info("Realizando expiração de assembleias");
         assemblyService.expireAssemblies()
+                .flatMap(assemblyDTO -> assemblyResultService.notifyAssemblyResult(assemblyDTO.getId()))
                 .doOnComplete(() -> log.info("Expirado as assembleias"))
                 .subscribe();
     }

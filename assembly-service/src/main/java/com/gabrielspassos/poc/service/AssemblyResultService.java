@@ -1,6 +1,7 @@
 package com.gabrielspassos.poc.service;
 
 import com.gabrielspassos.poc.builder.dto.AssemblyResultDTOBuilder;
+import com.gabrielspassos.poc.client.kafka.AssemblyResultProducer;
 import com.gabrielspassos.poc.dto.AssemblyDTO;
 import com.gabrielspassos.poc.dto.AssemblyResultDTO;
 import com.gabrielspassos.poc.dto.VoteDTO;
@@ -26,6 +27,7 @@ public class AssemblyResultService {
 
     private final AssemblyService assemblyService;
     private final VoteService voteService;
+    private final AssemblyResultProducer assemblyResultProducer;
 
     public Mono<AssemblyResultDTO> getAssemblyResult(String assemblyId) {
         return assemblyService.getAssemblyById(assemblyId)
@@ -33,6 +35,11 @@ public class AssemblyResultService {
                         .collectList()
                         .map(votes -> Tuples.of(assemblyDTO, votes)))
                 .map(this::buildAssemblyResult);
+    }
+
+    public Mono<AssemblyResultDTO> notifyAssemblyResult(String assemblyId) {
+        return getAssemblyResult(assemblyId)
+                .flatMap(assemblyResultProducer::sendAssemblyResultToTopic);
     }
 
     private AssemblyResultDTO buildAssemblyResult(Tuple2<AssemblyDTO, List<VoteDTO>> tuple) {
