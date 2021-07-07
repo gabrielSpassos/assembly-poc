@@ -58,6 +58,7 @@
 
 
 ## Tecnologias
+* **Java 11**: Linguagem OO, com estrutura e ecosistema robusto, uma das versões mais atualizadas. 
 * **SpringBoot Webflux**: framework reativo do SpringBoot que auxilia na performance de I/O da aplicação. 
 * **MongoDB**: banco de dados `schemaless` facilitando no desenvolvimento, com driver reativo já adequado para o uso do **SpringBoot Webflux**
 * **Shedlock**: dependência que realiza o lock a nível de instâncias para apenas uma instância realizar um determinado job. Nesse caso a tarefa expirar a entity `assembly`
