@@ -18,6 +18,7 @@ assembly:
 kafka:
   bootstrap-servers: ${KAFKA_URL:localhost}:9092
   votes-topic: votes-request-topic
+  assembly-result-topic: assembly-result-request-topic
   consumer-group: assembly-service
   topic:
     in: votes-request-topic
