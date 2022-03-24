@@ -72,3 +72,4 @@
 * **Swagger**: auxilio na documentação dos endpoints
 * **Docker**: ferramenta para criar o ambiente com os containers necessários para solução proposta
 * **Docker Compose**: orquestração dos containers
+* **Pull Request Size**: create tag of pull request size [Docs](https://github.com/noqcks/pull-request-size)
